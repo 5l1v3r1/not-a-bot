@@ -1,0 +1,57 @@
+name:                 not-a-bot
+version:              0.1.0.0
+author:               Nick Spinale
+maintainer:           Nick Spinale <nick@nickspinale.com>
+license:              MIT
+license-file:         LICENSE
+build-type:           Simple
+cabal-version:        >=1.10
+
+library
+  default-language:   Haskell2010
+  hs-source-dirs:     src
+
+  exposed-modules:    Network.HTTP.Cloudflare.Challenge
+
+  build-depends:      base >=4.8 && <5
+                    , attoparsec
+                    , bytestring
+                    , conduit
+                    , conduit-extra
+                    , html-conduit
+                    , http-client
+                    , http-client-lens
+                    , http-types
+                    , lens
+                    , mtl
+                    , resourcet
+                    , text
+                    , xml-conduit
+                    , xml-lens
+
+executable fetch-through-cloudflare
+  default-language:   Haskell2010
+  hs-source-dirs:     examples
+  main-is:            FetchThroughCloudflare.hs
+  ghc-options:        -threaded
+
+  build-depends:      base >=4.8 && <5
+                    , not-a-bot
+                    , conduit
+                    , http-client
+                    , http-client-lens
+                    , http-client-tls
+                    , http-conduit
+                    , http-types
+                    , lens
+
+test-suite tests
+  type:               exitcode-stdio-1.0
+  default-language:   Haskell2010
+  hs-source-dirs:     tests
+  main-is:            Tests.hs
+  ghc-options:        -threaded
+
+  build-depends:      base >=4.8 && <5
+                    , not-a-bot
+                    , html-conduit
