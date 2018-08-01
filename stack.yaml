@@ -1,4 +1,5 @@
 resolver: lts-12.4
 packages:
-- .
+- ./cloudflare-challenge
+- ./cloudflare-challenge-http-client
 - ../http-client-lens

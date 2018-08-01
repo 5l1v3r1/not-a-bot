@@ -1,4 +1,4 @@
-name:                 not-a-bot
+name:                 cloudflare-challenge
 version:              0.1.0.0
 author:               Nick Spinale
 maintainer:           Nick Spinale <nick@nickspinale.com>
@@ -29,22 +29,6 @@ library
                     , xml-conduit
                     , xml-lens
 
-executable fetch-through-cloudflare
-  default-language:   Haskell2010
-  hs-source-dirs:     examples
-  main-is:            FetchThroughCloudflare.hs
-  ghc-options:        -threaded
-
-  build-depends:      base >=4.8 && <5
-                    , not-a-bot
-                    , conduit
-                    , http-client
-                    , http-client-lens
-                    , http-client-tls
-                    , http-conduit
-                    , http-types
-                    , lens
-
 test-suite tests
   type:               exitcode-stdio-1.0
   default-language:   Haskell2010
@@ -53,5 +37,5 @@ test-suite tests
   ghc-options:        -threaded
 
   build-depends:      base >=4.8 && <5
-                    , not-a-bot
+                    , cloudflare-challenge
                     , html-conduit
