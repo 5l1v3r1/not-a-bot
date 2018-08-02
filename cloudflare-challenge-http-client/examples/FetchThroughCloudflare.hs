@@ -1,7 +1,6 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 import Control.Lens
-import Control.Monad ((>=>))
 import Data.Conduit (connect)
 import Data.Conduit.Combinators (stdout)
 import Network.HTTP.Client
@@ -11,20 +10,19 @@ import Network.HTTP.Client.TLS (tlsManagerSettings)
 import Network.HTTP.Types.Header
 import System.Environment (getArgs)
 
-import Network.HTTP.Cloudflare.Challenge
+import Network.HTTP.Client.Cloudflare.Challenge
 
 main :: IO ()
 main = do
     [url] <- getArgs
-    fetchThroughCloudflare url
+    fetchThroughChallenge url
 
 -- Fetch a URL, solving Cloudflare challenges if they are presented, and write the response to stdout
-fetchThroughCloudflare :: String -> IO ()
-fetchThroughCloudflare url = do
+fetchThroughChallenge :: String -> IO ()
+fetchThroughChallenge url = do
     man <- newManager $ tlsManagerSettings & _managerModifyRequest %~ (<&>) (& _requestHeaders <>~ extraHeaders)
-    let exec = flip responseOpenHistory man
     req <- parseRequest url
-    withFaceCloudflareChallenge_ exec req $ \resp ->
+    withThroughChallengeSimple man req $ \resp ->
         bodyReaderSource (responseBody resp) `connect` stdout
 
 -- Reduce the likelyhood of Cloudflare responding with a CAPTCHA
